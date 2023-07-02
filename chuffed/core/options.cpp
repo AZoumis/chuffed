@@ -28,6 +28,9 @@ Options::Options()
 			sbps(false)
 
 			,
+			lookahead(false),
+			stop_lookahead_after(100000)
+			,
 			prop_fifo(false)
 
 			,
@@ -363,6 +366,7 @@ void printLongHelp(int& argc, char**& argv, const std::string& fileExt) {
 				 "     value selection is the user-defined one. (default "
 			<< (def.sbps ? "on" : "off")
 			<< ").\n"
+			<< ").\n"
 				 "\n"
 				 "Learning Options:\n"
 				 "  --lazy [on|off], --no-lazy\n"
@@ -611,6 +615,10 @@ void parseOptions(int& argc, char**& argv, std::string* fileArg, const std::stri
 			so.sat_polarity = intBuffer;
 		} else if (cop.getBool("--sbps", boolBuffer)) {
 			so.sbps = boolBuffer;
+		} else if (cop.getBool("--lookahead", boolBuffer)) {
+			so.lookahead = boolBuffer;
+		} else if (cop.get("--stop-lookahead-after", &intBuffer)) {
+			so.stop_lookahead_after = intBuffer;
 		} else if (cop.getBool("--prop-fifo", boolBuffer)) {
 			so.prop_fifo = boolBuffer;
 		} else if (cop.getBool("--disj-edge-find", boolBuffer)) {
